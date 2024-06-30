@@ -27,12 +27,24 @@ string deposit(BankState &bank_state, string depositor, int amount) {
 }
 
 string withdraw(BankState &bank_state, string withdrawer, int amount) {
+  if(bank_state.balances[withdrawer] - amount < 0){
+    return "Balance is too low";
+  }
+  if(amount <= 0){
+    return "Amount should be greater than zero";
+  }
   bank_state.balances[withdrawer] -= amount;
   return "";
 }
 
 string transfer(BankState &bank_state, string sender, string receiver,
                 int amount) {
+  if(amount <= 0){
+    return "Amount should be greater than zero";
+  }
+  if(bank_state.balances[sender] - amount < 0){
+    return "Balance is too low";
+  }
   bank_state.balances[sender] -= amount;
   bank_state.balances[receiver] += amount;
   return "";
